@@ -8,6 +8,7 @@ const port = 5000
 const app = express()
 
 
+//Using an anonymous async function so that it waits for content to be loaded before execution
 app.get('/cheese/:cheeseChoice', async(req,res)=>{
     //Querying to see if cheeseChoice (param var) is in the DB
     let findingCheese = await Cheese.findOne({
@@ -21,10 +22,12 @@ app.get('/cheese/:cheeseChoice', async(req,res)=>{
             title: findingCheese.title,
             description: findingCheese.description
         }
+        await console.log(payload)
         await res.send(payload)
     //No query means no payload, which means, no cheese.
     }else{
-        await res.send('no cheese named '+req.params.cheeseChoice)
+        await console.log(payload)
+        await res.send("No cheese named '"+req.params.cheeseChoice+"'")
     }
     
     
